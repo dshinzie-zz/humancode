@@ -7,16 +7,19 @@ from .forms import ChatForm
 
 @csrf_exempt
 def chat(request):
-    if request.method == "POST" and request.GET['username'] and request.GET['text']:
-        new_chat = Chat.objects.create(
-            username=request.GET['username'],
-            text=request.GET['text'],
-            updated_at = timezone.now()
-        )
-        response = {'id': new_chat.id}
+    if request.method == "POST":
+        if request.GET['username'] and request.GET['text']:
+            new_chat = Chat.objects.create(
+                username=request.GET['username'],
+                text=request.GET['text'],
+                updated_at = timezone.now()
+            )
+            response = {'id': new_chat.id}
+        else:
+            return HttpResponseBadRequest()
     elif request.method == "GET" and request.GET['username']:
         response = Chat.get_texts(request.GET['username'])
     else:
-        return 404
+        return HttpResponseBadRequest()
 
     return JsonResponse(response, safe=False)
