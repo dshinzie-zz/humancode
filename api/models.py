@@ -14,7 +14,7 @@ class Chat(models.Model):
 
     @classmethod
     def get_texts(cls, username):
-        results = Chat.objects.order_by("created_at").filter(username=username, expiration_time__lte=time.time())
+        results = Chat.objects.order_by("created_at").filter(username=username, expiration_time__gte=time.time())
 
         return [{
             'id': result.id,
