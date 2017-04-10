@@ -6,6 +6,7 @@ from django.utils import timezone
 class Chat(models.Model):
     username = models.CharField(max_length=200)
     text = models.TextField()
+    expired = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
 

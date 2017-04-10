@@ -5,18 +5,29 @@ from django.http import JsonResponse
 from .models import Chat
 from .forms import ChatForm
 
+def get_post_response(post_params):
+    if post_params['username'] and post_params['text'] and post_params['timeout']:
+        new_chat = Chat.objects.create(
+            username=post_params['username'],
+            text=post_params['text'],
+            updated_at = timezone.now()
+        )
+
+        return {'id': new_chat.id}
+    elif post_params['username'] and post_params['text']:
+        new_chat = Chat.objects.create(
+            username=post_params['username'],
+            text=post_params['text'],
+            updated_at = timezone.now()
+        )
+        return {'id': new_chat.id}
+    else:
+        return HttpResponseBadRequest()
+
 @csrf_exempt
 def chat(request):
     if request.method == "POST":
-        if request.GET['username'] and request.GET['text']:
-            new_chat = Chat.objects.create(
-                username=request.GET['username'],
-                text=request.GET['text'],
-                updated_at = timezone.now()
-            )
-            response = {'id': new_chat.id}
-        else:
-            return HttpResponseBadRequest()
+        response = get_post_response(request.GET)
     elif request.method == "GET" and request.GET['username']:
         response = Chat.get_texts(request.GET['username'])
     else:
