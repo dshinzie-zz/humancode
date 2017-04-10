@@ -14,6 +14,6 @@ class Chat(models.Model):
         results = Chat.objects.order_by("created_at").filter(username=username)
 
         return [{
-            "id": result.id,
-            "text": result.text
+            'id': result.id,
+            'text': result.text
         } for result in results]
