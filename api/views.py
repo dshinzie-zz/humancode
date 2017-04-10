@@ -12,6 +12,6 @@ def chat(request):
             obj.updated_at = timezone.now()
             obj.save()
     else:
-        obj = Chat.get_texts(request.POST['username'])
+        obj = Chat.get_texts(request.GET['username'])
 
     return JsonResponse(obj, safe=False)
