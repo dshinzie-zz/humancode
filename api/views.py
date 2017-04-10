@@ -20,7 +20,7 @@ def create_chat(post_params):
     )
 
 def get_post_response(post_params):
-    if post_params['username'] and post_params['text']:
+    if 'username' in post_params and 'text' in post_params:
         new_chat = create_chat(post_params)
 
         return {'id': new_chat.id}

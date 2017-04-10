@@ -6,7 +6,7 @@ This is a simple Text Service with the following RESTful API endpoints:
 * GET '/chat', params: username
 
 ## Instructions
-Post requests must have the username and text parameters. The timeout parameter is optional. The post request will respond with the id the made object
+Post requests must have the username and text parameters. The timeout parameter is optional. The post request will respond with the id of the made object
 
 ```
 {
