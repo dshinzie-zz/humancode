@@ -2,18 +2,19 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils import timezone
+import time
 
 class Chat(models.Model):
     username = models.CharField(max_length=200)
     text = models.TextField()
     timeout = models.IntegerField(default=60)
-    expiration_time = models.BigIntegerField(default=0)
+    expiration_time = models.FloatField(default=time.time())
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
 
     @classmethod
     def get_texts(cls, username):
-        results = Chat.objects.order_by("created_at").filter(username=username)
+        results = Chat.objects.order_by("created_at").filter(username=username, expiration_time__lte=time.time())
 
         return [{
             'id': result.id,

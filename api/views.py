@@ -8,9 +8,9 @@ import time
 
 def create_chat(post_params):
     if 'timeout' in post_params:
-        timeout = post_params['timeout']
+        timeout = float(post_params['timeout'])
     else:
-        timeout = 60
+        timeout = float(60)
 
     return Chat.objects.create(
         username = post_params['username'],
