@@ -38,8 +38,16 @@ class ChatTestCase(TestCase):
 
          self.assertEqual(response.status_code, 200)
 
+    def test_get_request_content(self):
+        client = Client()
+        response = client.get('/chat', {'username': 'test_1'})
+        expected = '[{"text": "text 1", "id": 4}, {"text": "text 2", "id": 5}]'
+
+        self.assertEqual(response.content, expected)
+
     def test_post_request_are_successful(self):
          client = Client()
          response = client.post('/chat', {'username': 'test_2', 'text': 'test'})
 
-         self.assertEqual(response.status_code, 200)
+
+         self.assertEqual(response.content, '{"id": 21}')

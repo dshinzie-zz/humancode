@@ -27,10 +27,17 @@ def get_post_response(post_params):
     else:
         return HttpResponseBadRequest()
 
+def get_request_variables(input_request):
+    if 'username' in input_request.POST:
+        return input_request.POST
+    else:
+        return input_request.GET
+
 @csrf_exempt
 def chat(request):
     if request.method == "POST":
-        response = get_post_response(request.GET)
+        request_variables = get_request_variables(request)
+        response = get_post_response(request_variables)
     elif request.method == "GET" and request.GET['username']:
         response = Chat.get_texts(request.GET['username'])
     else:
