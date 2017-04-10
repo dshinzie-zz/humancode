@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 from .models import Chat
 from .forms import ChatForm
+import time
 
 def create_chat(post_params):
     if 'timeout' in post_params:
@@ -14,7 +15,7 @@ def create_chat(post_params):
     return Chat.objects.create(
         username = post_params['username'],
         text = post_params['text'],
-        timeout = timeout,
+        expiration_time = time.time() + timeout,
         updated_at = timezone.now()
     )
 

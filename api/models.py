@@ -7,6 +7,7 @@ class Chat(models.Model):
     username = models.CharField(max_length=200)
     text = models.TextField()
     timeout = models.IntegerField(default=60)
+    expiration_time = models.BigIntegerField(default=0)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
 
