@@ -7,14 +7,13 @@ import time
 class Chat(models.Model):
     username = models.CharField(max_length=200)
     text = models.TextField()
-    timeout = models.IntegerField(default=60)
     expiration_time = models.FloatField(default=time.time())
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
 
     @classmethod
     def get_texts(cls, username):
-        results = Chat.objects.order_by("created_at").filter(username=username, expiration_time__gte=time.time())
+        results = Chat.objects.order_by("created_at").filter(username=username).filter(expiration_time__gte=time.time())
 
         return [{
             'id': result.id,
