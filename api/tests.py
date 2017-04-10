@@ -19,4 +19,4 @@ class ChatTestCase(TestCase):
             {'id': user_1.id, 'text': user_1.text}
         ]
 
-    
+        self.assertEqual(Chat.get_texts(user_1.username), expected)
