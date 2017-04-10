@@ -8,3 +8,11 @@ class Chat(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
+
+    @classmethod
+    def _get_texts(cls, username):
+        results = Chat.objects.order_by("created_at").filter(username=username).values("id", "text")
+        return [{
+            "id": result.id,
+            "text": result.text
+        } for result in results]
